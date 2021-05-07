@@ -29,7 +29,17 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                 </plugin>
-            </plugins></pluginManagement>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+    <scm>
+        <developerConnection>scm:git:https://github.com/matte0DK/sfg-pet-clinic.git</developerConnection>
+    </scm>
 
 </project>
