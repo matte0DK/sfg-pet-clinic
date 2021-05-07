@@ -30,7 +30,10 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-site-plugin</artifactId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <configuration>
+                        <goal>install</goal>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
