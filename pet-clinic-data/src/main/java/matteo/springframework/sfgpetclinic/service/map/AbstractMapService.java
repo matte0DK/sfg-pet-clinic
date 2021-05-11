@@ -1,33 +1,47 @@
 package matteo.springframework.sfgpetclinic.service.map;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import matteo.springframework.sfgpetclinic.model.BaseEntity;
 
-public abstract class AbstractMapService<T, ID> {
+import java.util.*;
 
-    protected Map<ID, T> map = new HashMap<>();
+public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
 
-    Set<T> findAll() {
-        return new HashSet<>(map.values());
-    }
+    protected Map<Long, T> map = new HashMap<>();
 
-    T findById(ID id) {
-        return map.get(id);
-    }
+    Set<T> findAll() { return new HashSet<>(map.values()); }
 
-    T save(ID id, T object) {
-        map.put(id, object);
+    T findById(ID id) { return map.get(id); }
+
+    T save(T object) {
+
+        if (object != null) {
+            if (object.getId() == null) {
+                object.setId(getNextId());
+            }
+
+            map.put(object.getId(), object);
+        } else {
+            throw new RuntimeException("Object cannot be null");
+        }
 
         return object;
     }
 
-    boolean delete(T object) {
-        return map.entrySet().removeIf(entry -> entry.getValue().equals(object));
+    void delete(T object) { map.entrySet().removeIf(entry -> entry.getValue().equals(object)); }
+
+    void deleteById(ID id) {
+        map.remove(id);
     }
 
-    boolean deleteById(ID id) {
-        return map.remove(id) == null;
+    private Long getNextId() {
+        long nextId;
+        try {
+            nextId = Collections.max(map.keySet())+ 1;
+        } catch (NoSuchElementException nsee) {
+            nextId = 1L;
+        }
+
+
+        return nextId;
     }
 }

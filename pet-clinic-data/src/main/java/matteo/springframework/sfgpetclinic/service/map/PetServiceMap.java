@@ -20,16 +20,16 @@ public class PetServiceMap extends AbstractMapService<Pet,  Long> implements Pet
 
     @Override
     public Pet save(Pet object) {
-        return super.save(object.getId(), object);
+        return super.save(object);
     }
 
     @Override
-    public boolean delete(Pet object) {
-        return super.delete(object);
+    public void delete(Pet object) {
+        super.delete(object);
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return super.deleteById(id);
+    public void deleteById(Long id) {
+        super.deleteById(id);
     }
 }
