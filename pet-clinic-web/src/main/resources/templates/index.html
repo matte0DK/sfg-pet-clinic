@@ -1,30 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>List of Vets</title>
+    <meta charset="UTF-8" >
+    <title>Pet Clinic Index</title>
 </head>
 <body>
-<!--/*@thymesVar id="vets" type="matteo.springframework.sfgpetclinic.model.Vet"*/-->
-
-<h1 th:text="'List of Vets'">Vets List</h1>
-
-<table>
-    <thead>
-    <tr>
-        <th>Id</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr th:each="vet : ${vets}">
-        <td th:text="${vets.id}">1</td>
-        <td th:text="${vets.firstName}">Matteo</td>
-        <td th:text="${vets.lastName}">De Kerpel</td>
-    </tr>
-    </tbody>
-</table>
+<h1 th:text="'Index Page'">Index Page</h1>
 </body>
 </html>
