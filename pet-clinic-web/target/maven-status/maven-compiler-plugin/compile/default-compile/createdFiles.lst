@@ -1,1 +1,5 @@
+matteo\springframework\sfgpetclinic\controllers\VetController.class
+matteo\springframework\sfgpetclinic\controllers\OwnerController.class
+matteo\springframework\sfgpetclinic\bootstrap\DataLoader.class
 matteo\springframework\sfgpetclinic\SfgPetClinicApplication.class
+matteo\springframework\sfgpetclinic\controllers\IndexController.class
