@@ -1,6 +1,7 @@
 package matteo.springframework.sfgpetclinic.bootstrap;
 
 import matteo.springframework.sfgpetclinic.model.Owner;
+import matteo.springframework.sfgpetclinic.model.Pet;
 import matteo.springframework.sfgpetclinic.model.PetType;
 import matteo.springframework.sfgpetclinic.model.Vet;
 import matteo.springframework.sfgpetclinic.service.OwnerService;
@@ -8,6 +9,8 @@ import matteo.springframework.sfgpetclinic.service.PetTypeService;
 import matteo.springframework.sfgpetclinic.service.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -34,18 +37,38 @@ public class DataLoader implements CommandLineRunner {
         PetType savedDogPetType = petTypeService.save(dog);
 
         /*OWNERS*/
-        Owner anotherOwner = new Owner();
-        anotherOwner.setFirstName("Nino");
-        anotherOwner.setLastName("De Kerpel");
+        Owner owner1 = new Owner();
+        owner1.setFirstName("Nino");
+        owner1.setLastName("De Kerpel");
+        owner1.setAddress("Affligemstraat");
+        owner1.setCity("Affligem");
+        owner1.setPhoneNr("0455729374");
 
-        ownerService.save(anotherOwner);
+        Owner owner2 = new Owner();
+        owner2.setFirstName("Matteo");
+        owner2.setLastName("De Kerpel");
+        owner2.setAddress("Affligemstraat");
+        owner2.setCity("Affligem");
+        owner2.setPhoneNr("0455729376");
 
-        Owner owner = new Owner();
-        owner.setFirstName("Matteo");
-        owner.setLastName("De Kerpel");
+        /*PETS*/
+        Pet vito = new Pet();
+        vito.setPetType(savedCatPetType);
+        vito.setBirthDay(LocalDate.of(2016,1, 17));
+        vito.setOwner(owner2);
+        vito.setName("Vito");
+        owner2.getPets().add(vito);
 
-        ownerService.save(owner);
+        Pet nero = new Pet();
+        nero.setPetType(savedCatPetType);
+        nero.setBirthDay(LocalDate.of(2020, 4, 22));
+        nero.setOwner(owner2);
+        nero.setName("Nero");
+        owner2.getPets().add(nero);
 
+        /*SAVING OWNERS WITH THEIR PETS*/
+        ownerService.save(owner1);
+        ownerService.save(owner2);
         System.out.println("Loaded owners...");
 
         /*VETS*/
