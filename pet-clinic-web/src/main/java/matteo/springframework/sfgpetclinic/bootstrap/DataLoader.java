@@ -24,7 +24,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-
         /*PET-TYPES*/
         PetType cat = new PetType();
         cat.setName("Cat");
