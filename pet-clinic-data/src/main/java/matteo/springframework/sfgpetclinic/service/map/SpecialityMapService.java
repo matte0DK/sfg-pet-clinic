@@ -1,13 +1,13 @@
 package matteo.springframework.sfgpetclinic.service.map;
 
 import matteo.springframework.sfgpetclinic.model.Speciality;
-import matteo.springframework.sfgpetclinic.service.SpecialitiesService;
+import matteo.springframework.sfgpetclinic.service.SpecialityService;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
-public class SpecialityMapService extends AbstractMapService<Speciality, Long> implements SpecialitiesService {
+public class SpecialityMapService extends AbstractMapService<Speciality, Long> implements SpecialityService {
     @Override
     public Set<Speciality> findAll() {
         return super.findAll();
