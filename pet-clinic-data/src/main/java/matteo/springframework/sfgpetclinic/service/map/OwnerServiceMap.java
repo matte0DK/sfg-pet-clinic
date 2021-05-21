@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-public class OwnerServiceMap extends AbstractMapService<Owner,  Long> implements OwnerService {
+public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
 
     private final PetTypeService petTypeService;
     private final PetService petService;
@@ -31,26 +31,32 @@ public class OwnerServiceMap extends AbstractMapService<Owner,  Long> implements
     }
 
     @Override
-    public Owner save(Owner object) {
-        if (object == null) {
+    public Owner save(Owner owner) {
+        if (owner == null) {
             return null;
         }
-        if (object.getPets() != null) {
-            object.getPets().forEach(pet -> {
-                if (pet.getPetType() == null) {
-                    throw new RuntimeException("Pet Type is required");
-                }
-                if (pet.getPetType().getId() == null) {
-                    pet.setPetType(petTypeService.save(pet.getPetType()));
-                }
-                if (pet.getId() == null) {
-                    Pet savedPet = petService.save(pet);
-                    pet.setId(savedPet.getId());
-                }
-            });
+        savePets(owner);
+
+        return super.save(owner);
+    }
+
+    private void savePets(Owner owner) {
+        if (owner.getPets() != null) {
+            owner.getPets().forEach(pet -> savePet(pet));
+        }
+    }
+
+    private void savePet(Pet pet) {
+        try {
+            petTypeService.save(pet.getPetType());
+        } catch (RuntimeException runtimeException) {
+            runtimeException.printStackTrace();
         }
 
-        return super.save(object);
+        if (pet.getId() == null) {
+            /*Pet savedPet = */ petService.save(pet);
+            /*pet.setId(savedPet.getId());*/
+        }
     }
 
     @Override
