@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.Set;
 
 @Service
-@Profile("springdatajpa")
 public class VetMapService extends AbstractMapService<Vet,  Long> implements VetService {
     private final SpecialityService specialityService;
 

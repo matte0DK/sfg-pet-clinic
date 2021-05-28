@@ -1,13 +1,16 @@
 package matteo.springframework.sfgpetclinic.service.springdatajpa;
 
 import matteo.springframework.sfgpetclinic.model.Vet;
-import matteo.springframework.sfgpetclinic.repositories.PetRepository;
 import matteo.springframework.sfgpetclinic.repositories.VetRepository;
 import matteo.springframework.sfgpetclinic.service.VetService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
+@Profile("springdatajpa")
 public class VetSDJpaService implements VetService {
     private final VetRepository vetRepository;
 
@@ -28,13 +31,13 @@ public class VetSDJpaService implements VetService {
     }
 
     @Override
-    public Vet save(Vet object) {
-        return vetRepository.save(object);
+    public Vet save(Vet vet) {
+        return vetRepository.save(vet);
     }
 
     @Override
-    public void delete(Vet object) {
-        vetRepository.delete(object);
+    public void delete(Vet vet) {
+        vetRepository.delete(vet);
     }
 
     @Override

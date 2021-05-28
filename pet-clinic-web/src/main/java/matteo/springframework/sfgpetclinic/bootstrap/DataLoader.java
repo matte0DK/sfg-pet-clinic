@@ -87,10 +87,19 @@ public class DataLoader implements CommandLineRunner {
         nero.setName("Nero");
         owner2.getPets().add(nero);
 
+
         /*SAVING OWNERS WITH THEIR PETS*/
         ownerService.save(owner1);
         ownerService.save(owner2);
         System.out.println("Loaded owners...");
+
+
+        /*CREATING VISITS FOR THE PETS*/
+        Visit neroVisit = new Visit();
+        neroVisit.setPet(nero);
+        neroVisit.setDate(LocalDate.now());
+        neroVisit.setDescription("fat kitty needs some gym");
+
 
         /*VETS*/
         Vet vet = new Vet();
