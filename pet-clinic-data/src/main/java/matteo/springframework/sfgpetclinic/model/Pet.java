@@ -1,11 +1,23 @@
 package matteo.springframework.sfgpetclinic.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Pet extends BaseEntity {
+    @Column(name = "name")
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "type_id") // foreign key constraint
+    @Column(name = "pet_type")
     private PetType petType;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id") // foreign key constraint
     private Owner owner;
+
+    @Column(name = "birth_day")
     private LocalDate birthDay;
 
     public PetType getPetType() {
