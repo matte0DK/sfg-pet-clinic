@@ -9,21 +9,23 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name = "owners")
 public class Owner extends Person {
 
     @Builder
-    public Owner(String address, String city, String phoneNr, Set<Pet> pets) {
+    public Owner(String address, String city, String phoneNr, Set<Pet> pets, Long id, String lastName) {
         this.address = address;
         this.city = city;
         this.phoneNr = phoneNr;
         this.pets = pets;
+        this.id = id;
+        super.setLastName(lastName);
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "owner_id")
     private Long id;
 
     @Column(name = "address")
