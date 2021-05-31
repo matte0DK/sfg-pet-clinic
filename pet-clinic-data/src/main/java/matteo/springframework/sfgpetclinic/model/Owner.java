@@ -22,6 +22,10 @@ public class Owner extends Person {
         this.pets = pets;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @Column(name = "address")
     private String address;
 
