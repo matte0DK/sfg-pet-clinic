@@ -42,7 +42,7 @@ class OwnerControllerTest {
     }
 
     @Test
-    void listOwners() throws Exception {
+    void testListOwners() throws Exception {
         when(ownerService.findAll()).thenReturn(owners);
 
         mockMvc.perform(get("/owners"))
@@ -52,7 +52,7 @@ class OwnerControllerTest {
     }
 
     @Test
-    void listOwnersByIndex() throws Exception { // test to make sure Request mapping is working correctly
+    void testListOwnersByIndex() throws Exception { // test to make sure Request mapping is working correctly
         when(ownerService.findAll()).thenReturn(owners);
 
         mockMvc.perform(get("/owners/index"))
@@ -62,11 +62,21 @@ class OwnerControllerTest {
     }
 
     @Test
-    void findOwners() throws Exception {
+    void testFindOwners() throws Exception {
         mockMvc.perform(get("/owners/find"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("notimplemented"));
 
         verifyNoInteractions(ownerService);
+    }
+
+    @Test
+    void testShowOwner() throws Exception {
+        when(ownerService.findById(anyLong())).thenReturn(Owner.builder().id(1L).build());
+
+        mockMvc.perform(get("/owners/123"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/ownerDetails"))
+                .andExpect(model().attribute("owner", hasProperty("id", is(1L))));
     }
 }
