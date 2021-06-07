@@ -1,12 +1,10 @@
 package matteo.springframework.sfgpetclinic.controllers;
 
-import com.sun.istack.NotNull;
 import matteo.springframework.sfgpetclinic.model.Owner;
 import matteo.springframework.sfgpetclinic.service.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,7 +15,7 @@ import java.util.List;
 @RequestMapping("/owners")
 @Controller
 public class OwnerController {
-    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwner";
+    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owner/createOrUpdateOwner";
 
     private final OwnerService ownerService;
 
@@ -105,7 +103,6 @@ public class OwnerController {
     }
 
     @PostMapping("/{ownerId}/edit")
-    @ModelAttribute
     public String processUpdatingOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") Long ownerId) {
         if (!result.hasErrors()) {
             owner.setId(ownerId);
@@ -113,6 +110,6 @@ public class OwnerController {
             return "redirect:/owners/" + savedOwner.getId();
         }
 
-        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+        return "redirect:/owners/" + ownerId + "/edit";
     }
 }
