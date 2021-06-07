@@ -1,11 +1,13 @@
 package matteo.springframework.sfgpetclinic.service.springdatajpa;
 
 import matteo.springframework.sfgpetclinic.model.Pet;
+import matteo.springframework.sfgpetclinic.model.PetType;
 import matteo.springframework.sfgpetclinic.repositories.PetRepository;
 import matteo.springframework.sfgpetclinic.service.PetService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,5 +45,10 @@ public class PetSDJpaService implements PetService {
     @Override
     public void deleteById(Long id) {
         petRepository.deleteById(id);
+    }
+
+    @Override
+    public Collection<PetType> findPetTypes() {
+        return null;
     }
 }

@@ -1,10 +1,12 @@
 package matteo.springframework.sfgpetclinic.service.map;
 
 import matteo.springframework.sfgpetclinic.model.Pet;
+import matteo.springframework.sfgpetclinic.model.PetType;
 import matteo.springframework.sfgpetclinic.service.PetService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Set;
 
 @Service
@@ -33,5 +35,10 @@ public class PetMapService extends AbstractMapService<Pet,  Long> implements Pet
     @Override
     public void deleteById(Long id) {
         super.deleteById(id);
+    }
+
+    @Override
+    public Collection<PetType> findPetTypes() {
+        return null;
     }
 }
