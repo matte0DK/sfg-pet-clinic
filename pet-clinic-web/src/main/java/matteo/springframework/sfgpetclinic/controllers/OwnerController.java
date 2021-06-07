@@ -1,22 +1,23 @@
 package matteo.springframework.sfgpetclinic.controllers;
 
+import com.sun.istack.NotNull;
 import matteo.springframework.sfgpetclinic.model.Owner;
 import matteo.springframework.sfgpetclinic.service.OwnerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/owners")
 @Controller
 public class OwnerController {
+    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwner";
 
     private final OwnerService ownerService;
 
@@ -41,17 +42,25 @@ public class OwnerController {
         dataBinder.setDisallowedFields("id");
     }
 
+    @GetMapping("/{ownerId}")
+    public ModelAndView showOwner(@PathVariable("ownerId") Long ownerId) {
+        ModelAndView modelAndView = new ModelAndView("owners/ownerDetails");
+        modelAndView.addObject(ownerService.findById(ownerId));
+        return modelAndView;
+    }
+
+    // SHOW OWNER FORM
     @GetMapping("/find")
-    public String findOwners(Model model) {
+    public String initFindOwnerForm(Model model) {
         model.addAttribute("owner", Owner.builder().build());
         return "owners/findOwners";
     }
 
     @GetMapping
-    public String processFindForm(Owner owner, BindingResult result, Model model) {
+    public String processFindOwnerForm(@ModelAttribute Owner owner, BindingResult result, Model model) {
         // allow Get request for /owners to return all records without having to specify the parameters
         if (owner.getLastName() == null) {
-            owner.setLastName("");
+            owner.setLastName("%" + "" + "%");
             // empty string signifies broadest possible search
         }
 
@@ -72,10 +81,38 @@ public class OwnerController {
          }
     }
 
-    @GetMapping("/{ownerId}")
-    public ModelAndView showOwner(@PathVariable("ownerId") Long ownerId) {
-        ModelAndView modelAndView = new ModelAndView("owners/ownerDetails");
-        modelAndView.addObject(ownerService.findById(ownerId));
-        return modelAndView;
+    // CREATE NEW OWNER FORM
+    @GetMapping("/new")
+    public String initCreationOwnerForm(Model model) {
+        model.addAttribute("owner", Owner.builder().build());
+        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping("/new")
+    public String processCreationOwnerForm(@Valid Owner owner, BindingResult result) {
+        if (!result.hasErrors()) {
+            Owner savedOwner = ownerService.save(owner);
+            return "redirect:/owners/" + savedOwner.getId();
+        }
+        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+    }
+
+    // UPDATE EXISTING OWNER FORM
+    @GetMapping("/{ownerId}/edit")
+    public String initUpdatingOwnerForm(@PathVariable("ownerId") Long ownerId, Model model) {
+        model.addAttribute("owner", ownerService.findById(ownerId));
+        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+    }
+
+    @PostMapping("/{ownerId}/edit")
+    @ModelAttribute
+    public String processUpdatingOwnerForm(@Valid Owner owner, BindingResult result, @PathVariable("ownerId") Long ownerId) {
+        if (!result.hasErrors()) {
+            owner.setId(ownerId);
+            Owner savedOwner = ownerService.save(owner);
+            return "redirect:/owners/" + savedOwner.getId();
+        }
+
+        return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
     }
 }

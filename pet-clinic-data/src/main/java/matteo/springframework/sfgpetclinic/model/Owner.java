@@ -16,12 +16,13 @@ import java.util.Set;
 public class Owner extends Person {
 
     @Builder
-    public Owner(String address, String city, String phoneNr, Set<Pet> pets, Long id, String lastName) {
+    public Owner(String address, String city, String phoneNr, Set<Pet> pets, Long id, String firstName, String lastName) {
         this.address = address;
         this.city = city;
         this.phoneNr = phoneNr;
         this.pets = pets;
         this.id = id;
+        super.setFirstName(firstName);
         super.setLastName(lastName);
     }
 
