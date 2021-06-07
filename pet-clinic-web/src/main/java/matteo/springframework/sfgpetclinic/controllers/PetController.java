@@ -1,5 +1,6 @@
 package matteo.springframework.sfgpetclinic.controllers;
 
+import lombok.AllArgsConstructor;
 import matteo.springframework.sfgpetclinic.model.Owner;
 import matteo.springframework.sfgpetclinic.model.Pet;
 import matteo.springframework.sfgpetclinic.model.PetType;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
 
+@AllArgsConstructor
+
 @Controller
 @RequestMapping("/owners/{ownerId}")
 public class PetController {
@@ -25,12 +28,6 @@ public class PetController {
     private final PetTypeService petTypeService;
 
     private static final String VIEW_PET_CREATE_OR_UPDATE_FROM = "/pets/createOrUpdatePetForm";
-
-    public PetController(PetService petService, OwnerService ownerService, PetTypeService petTypeService) {
-        this.petService = petService;
-        this.ownerService = ownerService;
-        this.petTypeService = petTypeService;
-    }
 
     @ModelAttribute("types")
     public Collection<PetType> populatePetTypes() {
@@ -47,6 +44,7 @@ public class PetController {
         dataBinder.setDisallowedFields("id");
     }
 
+    // CREATE NEW PET FORM
     @GetMapping("/pets/new")
     public String initCreatePetForm(Owner owner, Model model) {
         Pet pet = new Pet();
@@ -69,6 +67,7 @@ public class PetController {
         return VIEW_PET_CREATE_OR_UPDATE_FROM;
     }
 
+    /* private methods for processCreatePetForm()*/
     private void validatePetForm(Owner owner, @Valid Pet pet, BindingResult result) {
         if (isEmpty(pet) && pet.isNew() && hasPet(owner, pet)) {
             result.rejectValue("name", "duplicate", "already exists");
@@ -82,4 +81,6 @@ public class PetController {
     private boolean hasPet(Owner owner, @Valid Pet pet) {
         return owner.getPet(pet.getName(), true) != null;
     }
+
+    // UPDATING AN EXISTING PET FORM -> TODO
 }

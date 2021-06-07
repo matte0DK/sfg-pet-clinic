@@ -67,7 +67,7 @@ class PetControllerTest {
     }
 
     @Test
-    void testProcessCreationForm() throws Exception {
+    void testProcessCreateForm() throws Exception {
         when(ownerService.findById(anyLong())).thenReturn(owner);
         when(petTypeService.findAll()).thenReturn(petTypes);
 
