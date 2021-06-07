@@ -47,7 +47,6 @@ public class PetSDJpaService implements PetService {
         petRepository.deleteById(id);
     }
 
-    @Override
     public Collection<PetType> findPetTypes() {
         return null;
     }

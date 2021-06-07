@@ -20,10 +20,13 @@ public class Owner extends Person {
         this.address = address;
         this.city = city;
         this.phoneNr = phoneNr;
-        this.pets = pets;
         this.id = id;
         super.setFirstName(firstName);
         super.setLastName(lastName);
+
+        if (pets != null) {
+            this.pets = pets;
+        }
     }
 
     @Column(name = "owner_id")
@@ -41,4 +44,52 @@ public class Owner extends Person {
     @Column(name = "pets")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
+
+    protected Set<Pet> getPetsInternal() {
+        if (this.pets == null) {
+            this.pets = new HashSet<>();
+        }
+        return this.pets;
+    }
+
+    public void addPet(Pet pet) {
+        if (pet.isNew()) {
+            getPetsInternal().add(pet);
+        }
+        pet.setOwner(this);
+    }
+
+    /**
+     * Return the Pet with the given name, or null if none found for this Owner.
+     * @param name to test
+     * @return true if pet name is already in use
+     */
+    public Pet getPet(String name) {
+        return getPet(name, false);
+    }
+
+    /**
+     * Return the Pet with the given name, or null if none found for this Owner.
+     * @param name to test
+     * @return true if pet name is already in use
+     */
+    public Pet getPet(String name, boolean ignoreNew) {
+        String compName;
+
+        name = name.toLowerCase();
+
+        for (Pet pet : getPetsInternal()) {
+
+            if (ignoreNew || pet.isNew()) {
+                return null;
+            }
+
+            compName = pet.getName().toLowerCase();
+
+            if (compName.equals(name)) {
+                return pet;
+            }
+        }
+        return null;
+    }
 }
