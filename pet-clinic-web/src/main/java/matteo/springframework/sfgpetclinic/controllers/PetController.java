@@ -27,7 +27,7 @@ public class PetController {
     private final OwnerService ownerService;
     private final PetTypeService petTypeService;
 
-    private static final String VIEW_PET_CREATE_OR_UPDATE_FROM = "/pets/createOrUpdatePetForm";
+    private static final String VIEW_PET_CREATE_OR_UPDATE_FROM = "pets/createOrUpdatePetForm";
 
     @ModelAttribute("types")
     public Collection<PetType> populatePetTypes() {

@@ -32,6 +32,7 @@ public class Pet extends BaseEntity {
     private Set<Visit> visits = new HashSet<>();
 
     @Builder
+    // whe apply builder pattern here (constructor), so we can given id value to Pet object we build in the test(s).
     public Pet(Long id, String name, PetType petType, Owner owner, LocalDate birthDay, Set<Visit> visits) {
         super(id);
         this.name = name;
