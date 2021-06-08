@@ -21,4 +21,15 @@ public class Vet extends Person {
             joinColumns = @JoinColumn(name = "vet_id"),
             inverseJoinColumns = @JoinColumn(name = "speciality_id")) // creating a separate table by using id's from both selected columns.
     private Set<Speciality> specialities = new HashSet<>();
+
+    protected Set<Speciality> getSpecialtiesInternal() {
+        if (this.specialities == null) {
+            this.specialities = new HashSet<>();
+        }
+        return this.specialities;
+    }
+
+    public int getNrOfSpecialities() {
+        return getSpecialtiesInternal().size();
+    }
 }
