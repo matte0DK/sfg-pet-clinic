@@ -44,12 +44,20 @@ public class PetController {
         dataBinder.setDisallowedFields("id");
     }
 
+
+    @InitBinder("pet")
+    public void initPetBinder(WebDataBinder dataBinder) {
+        /*dataBinder.setValidator(new PetValidator());*/
+    }
+
     // CREATE NEW PET FORM
     @GetMapping("/pets/new")
     public String initCreatePetForm(Owner owner, Model model) {
         Pet pet = new Pet();
+
         owner.addPet(pet);
         model.asMap().put("pet", pet);
+
         return VIEW_PET_CREATE_OR_UPDATE_FROM;
     }
 
@@ -65,6 +73,15 @@ public class PetController {
 
         model.put("pet", pet);
         return VIEW_PET_CREATE_OR_UPDATE_FROM;
+
+        /*
+        ModelMap:
+         * Implementation of {@link java.util.Map} for use when building model data for use
+         * with UI tools. Supports chained calls and generation of model attribute names.
+         *
+         * <p>This class serves as generic model holder for Servlet MVC but is not tied to it.
+         * Check out the {@link Model} interface for an interface variant.
+        */
     }
 
     /* private methods for processCreatePetForm()*/
@@ -75,6 +92,11 @@ public class PetController {
     }
 
     private boolean isEmpty(@Valid Pet pet) {
+        /* Check that the given {@code String -> in this case pet.getName()} is neither {@code null} nor of length 0.
+         * <p>Note: this method returns {@code true} for a {@code String} that
+         * purely consists of whitespace.
+         * @param str the {@code String} to check (may be {@code null})
+         * @return {@code true} if the {@code String} is not {@code null} and has length.*/
         return StringUtils.hasLength(pet.getName());
     }
 
@@ -82,5 +104,25 @@ public class PetController {
         return owner.getPet(pet.getName(), true) != null;
     }
 
-    // UPDATING AN EXISTING PET FORM -> TODO
+    // UPDATING AN EXISTING PET FORM
+    @GetMapping("/pets/{petId}/edit")
+    public String initUpdatePetForm(@PathVariable("petId") Long petId, ModelMap modelMap) {
+        modelMap.put("pet", petService.findById(petId));
+        return VIEW_PET_CREATE_OR_UPDATE_FROM;
+    }
+
+    @PostMapping("/pets/{petId}/edit")
+    public String processUpdatePetForm(@Valid Pet pet, Owner owner, BindingResult result, ModelMap modelMap) {
+        if (!result.hasErrors()) {
+            owner.getPets().add(pet);
+            this.petService.save(pet);
+
+            return "redirect:/owners/" + owner.getId();
+        }
+
+        pet.setOwner(owner);
+        modelMap.put("pet", pet);
+
+        return VIEW_PET_CREATE_OR_UPDATE_FROM;
+    }
 }

@@ -103,7 +103,7 @@ class OwnerControllerTest {
                 .andExpect(view().name("redirect:/owners/1"))
                 .andExpect(model().attributeExists("owner"));
 
-        verify(ownerService).save(ArgumentMatchers.any());
+        verify(ownerService).save(ArgumentMatchers.any(Owner.class));
     }
 
     // UPDATE AN EXISTING FORM
@@ -128,6 +128,6 @@ class OwnerControllerTest {
                 .andExpect(view().name("redirect:/owners/1"))
                 .andExpect(model().attributeExists("owner"));
 
-        verify(ownerService).save(ArgumentMatchers.any());
+        verify(ownerService).save(ArgumentMatchers.any(Owner.class));
     }
 }
