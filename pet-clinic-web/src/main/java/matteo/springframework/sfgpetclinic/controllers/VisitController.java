@@ -44,7 +44,11 @@ public class VisitController {
     }
 
     @PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
-    public String processNewVisitForm(@Valid Visit visit, BindingResult result) {
+    public String processNewVisitForm(@Valid Visit visit,
+                                      BindingResult result,
+                                      @PathVariable("petId") Long petId,
+                                      @PathVariable String ownerId) {
+
         if (!result.hasErrors()) {
             visitService.save(visit);
             return "pets/createOrUpdateVisitForm";
