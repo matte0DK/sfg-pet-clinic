@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
+import java.util.Set;
 
 @AllArgsConstructor
 
@@ -24,6 +25,12 @@ public class VetController {
         model.addAttribute("vets", vetService.findAll());
 
         return "vets/index";
+    }
+
+    @GetMapping("/api/vets")
+    // responseBody annotation views the return in a Json format in browser //
+    public @ResponseBody Set<Vet> getVetsJson() {
+        return vetService.findAll();
     }
 
     @GetMapping("/vets.html")
