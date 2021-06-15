@@ -17,7 +17,6 @@ import java.util.Map;
 
 @Controller
 public class VisitController {
-
     private final VisitService visitService;
     private final PetService petService;
 
@@ -27,12 +26,14 @@ public class VisitController {
     }
 
     @ModelAttribute("visit")
-    public Visit loadPetWithVisit(@PathVariable("petId") Long petId, Map<String, Object> model) {
+    public Visit loadPetWithVisit(@Valid @PathVariable("petId") Long petId, Map<String, Object> model) {
         Pet pet = this.petService.findById(petId);
-        model.put("pet", pet);
         Visit visit = new Visit();
+
+        model.put("pet", pet);
         pet.getVisits().add(visit);
         visit.setPet(pet);
+
         return visit;
     }
 
@@ -48,7 +49,7 @@ public class VisitController {
             visitService.save(visit);
             return "pets/createOrUpdateVisitForm";
         }
-        return "redirect:/owners/{ownerId}";
+        return "redirect:/owners/" + visit.getPet().getOwner().getId();
     }
 
 }

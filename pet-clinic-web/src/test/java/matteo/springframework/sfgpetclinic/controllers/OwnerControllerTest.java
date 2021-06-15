@@ -64,7 +64,7 @@ class OwnerControllerTest {
     }
 
     @Test
-    void processFindFormReturnMany() throws Exception {
+    void processFindFormEmptyReturnMany() throws Exception {
         when(ownerService.findByLastNameLike(anyString())).thenReturn(Arrays.asList(Owner.builder().id(1L).build(),
                 Owner.builder().id(2L).build()));
 
