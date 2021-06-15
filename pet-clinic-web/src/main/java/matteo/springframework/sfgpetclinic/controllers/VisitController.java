@@ -5,12 +5,15 @@ import matteo.springframework.sfgpetclinic.model.Pet;
 import matteo.springframework.sfgpetclinic.model.Visit;
 import matteo.springframework.sfgpetclinic.service.PetService;
 import matteo.springframework.sfgpetclinic.service.VisitService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.time.LocalDate;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -23,6 +26,15 @@ public class VisitController {
     @InitBinder
     public void setAllowedFields(WebDataBinder webDataBinder) {
         webDataBinder.setDisallowedFields("id");
+        webDataBinder.registerCustomEditor(LocalDate.class, new EditorSupport());
+
+    }
+    // nested property editor class.
+    private static class EditorSupport extends PropertyEditorSupport {
+        @Override
+        public void setAsText(String text) {
+            setValue(LocalDate.parse(text));
+        }
     }
 
     @ModelAttribute("visit")
@@ -55,5 +67,4 @@ public class VisitController {
         }
         return "redirect:/owners/" + visit.getPet().getOwner().getId();
     }
-
 }

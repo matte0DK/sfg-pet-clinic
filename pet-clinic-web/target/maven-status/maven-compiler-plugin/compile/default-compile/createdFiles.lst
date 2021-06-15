@@ -1,6 +1,8 @@
 matteo\springframework\sfgpetclinic\controllers\VetController.class
 matteo\springframework\sfgpetclinic\controllers\OwnerController.class
 matteo\springframework\sfgpetclinic\controllers\PetController.class
+matteo\springframework\sfgpetclinic\formatter\PetTypeFormatter.class
 matteo\springframework\sfgpetclinic\bootstrap\DataLoader.class
 matteo\springframework\sfgpetclinic\SfgPetClinicApplication.class
 matteo\springframework\sfgpetclinic\controllers\IndexController.class
+matteo\springframework\sfgpetclinic\controllers\VisitController.class

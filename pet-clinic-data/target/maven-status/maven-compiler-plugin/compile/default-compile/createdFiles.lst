@@ -1,4 +1,5 @@
 matteo\springframework\sfgpetclinic\model\Vet$VetBuilder.class
+matteo\springframework\sfgpetclinic\model\Vets$VetsBuilder.class
 matteo\springframework\sfgpetclinic\service\map\VisitMapService.class
 matteo\springframework\sfgpetclinic\service\springdatajpa\VetSDJpaService.class
 matteo\springframework\sfgpetclinic\model\Pet$PetBuilder.class
@@ -35,6 +36,7 @@ matteo\springframework\sfgpetclinic\service\PetService.class
 matteo\springframework\sfgpetclinic\service\springdatajpa\VisitSDJpaService.class
 matteo\springframework\sfgpetclinic\repositories\PetTypeRepository.class
 matteo\springframework\sfgpetclinic\service\map\VetMapService.class
+matteo\springframework\sfgpetclinic\model\Vets.class
 matteo\springframework\sfgpetclinic\model\Vet.class
 matteo\springframework\sfgpetclinic\service\VisitService.class
 matteo\springframework\sfgpetclinic\model\BaseEntity.class
