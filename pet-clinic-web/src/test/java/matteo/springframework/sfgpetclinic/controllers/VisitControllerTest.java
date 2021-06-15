@@ -90,7 +90,7 @@ class VisitControllerTest {
     void processNewVisitForm() throws Exception {
         mockMvc.perform(post(visitsUri)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .param("date", "2021-06-15")
+            .param("date", "15-06-2021")
             .param("description", YET_ANOTHER_VISIT_DESCRIPTION))
 
                 .andExpect(status().is3xxRedirection())
